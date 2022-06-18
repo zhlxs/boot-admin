@@ -1,26 +1,41 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <router-view />
+  <!-- <router-view v-if="isRouterAlive" /> 进行v-if判断 -->
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import { ref, nextTick, provide } from 'vue'// 要引入方法
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  setup () {
+    // 局部组件刷新
+    const isRouterAlive = ref(true)
+    const reload = () => {
+      isRouterAlive.value = false
+      nextTick(() => {
+        isRouterAlive.value = true
+      })
+    }
+    provide('reload', reload)
+    return {
+      isRouterAlive
+    }
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style lang="scss">
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-decoration: none;
+  outline: none;
 }
+
+// 定义全局字体格式
+// @font-face {
+//   font-family: 'bing';
+//   src: url();
+// }
 </style>
