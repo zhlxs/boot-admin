@@ -23,3 +23,10 @@ export const create = async (params) => {
 export const del = async (params) => {
   return await $get('/role/delete', params)
 }
+
+/**
+ * 删除
+ */
+export const update = async (params) => {
+  return await $post('/role/update', params)
+}

@@ -1,10 +1,10 @@
 
 // 表单校验
-export const formRules = (type, maxlength, min, max) => {
+export const formRules = (type, desc, maxlength, min, max) => {
   const rule = {
     // 必填
     must: [
-      { required: true, message: '不能为空' },
+      { required: true, message: `${desc || ''}不能为空` },
       { pattern: /^(?!(\s+$))/, message: '输入的值不能只有空格', trigger: 'blur' }
     ],
     maxLengthRequired: [ // 数字--不超过max

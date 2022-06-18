@@ -13,7 +13,7 @@
     style="height:calc(100vh - 320px);" @handleView="handleView" @handleEdit="handleEdit" @handleDelete="handleDelete"
     @paginationChange="paginationChange" />
   <!-- 新增 -->
-  <AddForm ref="AddFormRef" @dataLoad="LoadTableData" />
+  <AddForm ref="AddFormRef" @dataLoad="LoadTableData" :formBody="formBody" />
 </template>
 
 <script>
@@ -62,6 +62,13 @@ export default {
     ]
     // 查询参数封装
     const formData = reactive({ roleName: '' })
+    const formBody =
+    {
+      id: '',
+      roleName: '',
+      roleKey: '',
+      status: '0'
+    }
     const queryData = {
       current: 1,
       size: 10,
@@ -86,11 +93,19 @@ export default {
       AddFormRef.value.open()
     }
     const handleView = row => {
-      console.log('查看', row)
+      formBody.roleName = row.roleName
+      formBody.roleKey = row.roleKey
+      formBody.status = row.status + ''
+      AddFormRef.value.open('查看')
     }
     const handleEdit = row => {
-      AddFormRef.value.open()
-      console.log('编辑', row)
+      formBody.id = row.id
+      formBody.roleName = row.roleName
+      formBody.roleKey = row.roleKey
+      formBody.status = row.status + ''
+      if (formBody.id) {
+        AddFormRef.value.open('编辑')
+      }
     }
     const handleDelete = row => {
       del({ id: row.id }).then(res => {
@@ -172,7 +187,8 @@ export default {
       paginationChange,
       pageData,
       formselect,
-      LoadTableData
+      LoadTableData,
+      formBody
     }
   }
 }
